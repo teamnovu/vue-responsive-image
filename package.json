@@ -1,7 +1,7 @@
 {
   "name": "@teamnovu/vue-responsive-image",
   "description": "Make every Image Responsive to Shrink your Bundle Size",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "license": "MIT",
   "contributors": [
     {
