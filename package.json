@@ -2,18 +2,26 @@
   "name": "@teamnovu/vue-responsive-image",
   "description": "Make every Image Responsive to Shrink your Bundle Size",
   "version": "0.1.0",
-  "private": true,
-  "main": "./dist/responsiveImage.common.js",
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Tom Diggelmann (@buffalom)"
+    }
+  ],
+  "main": "./dist/vueResponsiveImage.common.js",
   "files": [
     "dist/*"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-bundle": "vue-cli-service build --target lib --name responsiveImage ./src/components/index.js",
-    "test:unit": "vue-cli-service test:unit",
+    "build-bundle": "vue-cli-service build --target lib --name vueResponsiveImage ./src/components/index.js",
     "lint": "vue-cli-service lint",
-    "release": "standard-version"
+    "test:unit": "vue-cli-service test:unit",
+    "test": "yarn lint && yarn test:unit",
+    "release": "yarn test && yarn update:gh-pages && standard-version && git push --follow-tags && npm publish",
+    "update:gh-pages": "DEPLOY_ENV=GH_PAGES yarn build && git add -A && git diff-index --quiet HEAD || git commit -m \"docs: update gh-pages\" && git push && yarn deploy:gh-pages",
+    "deploy:gh-pages": "git subtree push --prefix example/dist origin gh-pages"
   },
   "dependencies": {
     "core-js": "^3.6.4",
@@ -40,5 +48,8 @@
     "husky": "^4.2.5",
     "standard-version": "^7.1.0",
     "vue-template-compiler": "^2.6.11"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
