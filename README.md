@@ -71,7 +71,7 @@ Just use the `<ResponsiveImage />` component where you would have a normal `<img
 
 1. Clone this repository
 2. Install dependencies using `yarn install`
-3. Start development server using `yarn dev`
+3. Start development server using `yarn serve`
 
 ### Release
 
