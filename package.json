@@ -1,6 +1,6 @@
 {
-  "name": "@teamnovu/responsive-image",
-  "description": "Make Responsive Images Standard",
+  "name": "@teamnovu/vue-responsive-image",
+  "description": "Make every Image Responsive to Shrink your Bundle Size",
   "version": "0.1.0",
   "private": true,
   "main": "./dist/responsiveImage.common.js",
