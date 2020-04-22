@@ -1,8 +1,18 @@
 <template>
   <div id="app">
-    <div class="p-8">
+    <div class="p-8 flex justify-center">
       <ResponsiveImage
-        src="https://cms.samir-serhani.ch/img/http/aHR0cDovL3MzLnRkMi5jaC9zYW1pci1zZXJoYW5pLmNoL2Fzc2V0cy9pbWFnZXMvSU1HXzE0ODEuSlBH?w=3000"
+        class="w-5/6 md:w-3/5 xl:w-1/2"
+        src="https://source.unsplash.com/random/{w}x1000"
+        :screens="{
+          xs: '360px',
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1280px'
+        }"
+        :max-width="3000"
+        sizes="w-90vw md:w-60vw xl:w-50vw"
       />
     </div>
   </div>
