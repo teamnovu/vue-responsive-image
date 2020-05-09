@@ -54,72 +54,53 @@ export default {
       return Object.keys(this.breakpoints).sort((a, b) => this.breakpoints[a] - this.breakpoints[b])
     },
 
-    widthPercentages () {
+    percentages () {
       const sizes = this.sizes
         .toLowerCase()
         .split(/\s+/)
         .filter(s => s)
         .reduce((acc, size) => {
-          const matches = size.match(/^(?:([a-z]+):)?w-([0-9]{1,2})vw?$/)
-          if (!matches) {
-            console.warn('ignoring invalid width string:', size)
+          let match = size.match(/^(?:([a-z]+):)?w-([0-9]{1,2})vw?$/)
+          if (match) {
+            const breakpoint = match[1] && this.breakpointKeys.includes(match[1]) ? match[1] : BASE_BREAKPOINT_KEY
+            const percentage = match[2] ? parseInt(match[2]) : null
+            if (breakpoint && percentage) acc.width[breakpoint] = percentage
             return acc
           }
 
-          const breakpoint = matches[1] && this.breakpointKeys.includes(matches[1]) ? matches[1] : BASE_BREAKPOINT_KEY
-          const percentage = matches[2] ? parseInt(matches[2]) : null
-
-          if (breakpoint && percentage) acc[breakpoint] = percentage
-          return acc
-        }, {})
-
-      const widthPercentages = this.breakpointKeys.reduce((acc, key, i) => {
-        if (sizes[key]) {
-          acc[key] = sizes[key]
-        } else if (i > 0) {
-          acc[key] = acc[this.breakpointKeys[i - 1]]
-        } else {
-          acc[key] = 100
-        }
-
-        return acc
-      }, {})
-
-      return widthPercentages
-    },
-
-    heightPercentages () {
-      const sizes = this.sizes
-        .toLowerCase()
-        .split(/\s+/)
-        .filter(s => s)
-        .reduce((acc, size) => {
-          const matches = size.match(/^(?:([a-z]+):)?h-(([0-9]+)(?:\/([0-9]+))?|full)$/)
-          if (!matches) {
-            console.warn('ignoring invalid height string:', size)
+          match = size.match(/^(?:([a-z]+):)?h-(([0-9]+)(?:\/([0-9]+))?|full)$/)
+          if (match) {
+            const breakpoint = match[1] && this.breakpointKeys.includes(match[1]) ? match[1] : BASE_BREAKPOINT_KEY
+            const percentage = match[2] === 'full' ? 100 : parseInt(match[3]) / (parseInt(match[4]) || 1) * 100
+            if (breakpoint && percentage) acc.height[breakpoint] = percentage
             return acc
           }
 
-          const breakpoint = matches[1] && this.breakpointKeys.includes(matches[1]) ? matches[1] : BASE_BREAKPOINT_KEY
-          const percentage = matches[2] === 'full' ? 100 : parseInt(matches[3]) / (parseInt(matches[4]) || 1) * 100
-
-          if (breakpoint && percentage) acc[breakpoint] = percentage
+          console.warn('ignoring invalid sizes string:', size)
           return acc
-        }, {})
+        }, { width: {}, height: {} })
 
-      const heightPercentages = this.breakpointKeys.reduce((acc, key, i) => {
-        if (sizes[key]) {
-          acc[key] = sizes[key]
+      const percentages = this.breakpointKeys.reduce((acc, key, i) => {
+        if (sizes.width[key]) {
+          acc.width[key] = sizes.width[key]
         } else if (i > 0) {
-          acc[key] = acc[this.breakpointKeys[i - 1]]
+          acc.width[key] = acc.width[this.breakpointKeys[i - 1]]
         } else {
-          acc[key] = null
+          acc.width[key] = 100
+        }
+
+        if (sizes.height[key]) {
+          acc.height[key] = sizes.height[key]
+        } else if (i > 0) {
+          acc.height[key] = acc.height[this.breakpointKeys[i - 1]]
+        } else {
+          acc.height[key] = null
         }
 
         return acc
-      }, {})
+      }, { width: {}, height: {} })
 
-      return heightPercentages
+      return percentages
     },
 
     imageWidths () {
@@ -127,7 +108,7 @@ export default {
         let nextBreakpoint = this.breakpoints[this.breakpointKeys[i + 1]]
         if (!nextBreakpoint) nextBreakpoint = this.maxWidth
 
-        acc[key] = Math.round(nextBreakpoint / 100 * this.widthPercentages[key])
+        acc[key] = Math.round(nextBreakpoint / 100 * this.percentages.width[key])
         return acc
       }, {})
 
@@ -139,8 +120,8 @@ export default {
         let imageWidth = this.imageWidths[key]
         if (!imageWidth) imageWidth = this.maxWidth
 
-        acc[key] = this.heightPercentages[key]
-          ? Math.round(imageWidth / 100 * this.heightPercentages[key])
+        acc[key] = this.percentages.height[key]
+          ? Math.round(imageWidth / 100 * this.percentages.height[key])
           : null
         return acc
       }, {})
@@ -149,8 +130,8 @@ export default {
     },
 
     fallbackSrc () {
-      const lastBreakpointWidthPercentage = this.widthPercentages[this.breakpointKeys[this.breakpointKeys.length - 1]]
-      const lastBreakpointHeightPercentage = this.heightPercentages[this.breakpointKeys[this.breakpointKeys.length - 1]]
+      const lastBreakpointWidthPercentage = this.percentages.width[this.breakpointKeys[this.breakpointKeys.length - 1]]
+      const lastBreakpointHeightPercentage = this.percentages.height[this.breakpointKeys[this.breakpointKeys.length - 1]]
       let fallbackWidth = this.maxWidth
       let fallbackHeight
       if (lastBreakpointWidthPercentage) fallbackWidth = fallbackWidth / 100 * lastBreakpointWidthPercentage

@@ -50,7 +50,7 @@ describe('ResponsiveImage.vue', () => {
 
     sizes = 'w-90vw md:w-60vw xl:w-50vw'
     wrapper.setProps({ src, sizes })
-    expect(wrapper.vm.widthPercentages).toMatchObject({
+    expect(wrapper.vm.percentages.width).toMatchObject({
       _base: 90,
       sm: 90,
       md: 60,
@@ -60,7 +60,7 @@ describe('ResponsiveImage.vue', () => {
 
     sizes = 'xl:w-50vw md:h-4/5 w-90vw h-full md:w-60vw'
     wrapper.setProps({ src, sizes })
-    expect(wrapper.vm.widthPercentages).toMatchObject({
+    expect(wrapper.vm.percentages.width).toMatchObject({
       _base: 90,
       sm: 90,
       md: 60,
@@ -70,7 +70,7 @@ describe('ResponsiveImage.vue', () => {
 
     sizes = 'md:w-60vw md:w-80vw xl:w-50vw xxl:w-100'
     wrapper.setProps({ src, sizes })
-    expect(wrapper.vm.widthPercentages).toMatchObject({
+    expect(wrapper.vm.percentages.width).toMatchObject({
       _base: 100,
       sm: 100,
       md: 80,
@@ -80,7 +80,7 @@ describe('ResponsiveImage.vue', () => {
 
     sizes = 'w-80 h-1/2 md:w-60 xl:w-50vw h-full md:h-2/3'
     wrapper.setProps({ src, sizes })
-    expect(wrapper.vm.widthPercentages).toMatchObject({
+    expect(wrapper.vm.percentages.width).toMatchObject({
       _base: 100,
       sm: 100,
       md: 100,
@@ -98,7 +98,7 @@ describe('ResponsiveImage.vue', () => {
 
     sizes = 'h-9/10 md:h-3/5 xl:h-1/2'
     wrapper.setProps({ src, sizes })
-    expect(wrapper.vm.heightPercentages).toMatchObject({
+    expect(wrapper.vm.percentages.height).toMatchObject({
       _base: 90,
       sm: 90,
       md: 60,
@@ -108,7 +108,7 @@ describe('ResponsiveImage.vue', () => {
 
     sizes = 'xl:h-5/10 md:w-80vw h-9/10 w-100vw md:h-6/10'
     wrapper.setProps({ src, sizes })
-    expect(wrapper.vm.heightPercentages).toMatchObject({
+    expect(wrapper.vm.percentages.height).toMatchObject({
       _base: 90,
       sm: 90,
       md: 60,
@@ -118,7 +118,7 @@ describe('ResponsiveImage.vue', () => {
 
     sizes = 'md:h-6/10 md:h-8/10 xl:h-full xxl:h-foo'
     wrapper.setProps({ src, sizes })
-    expect(wrapper.vm.heightPercentages).toMatchObject({
+    expect(wrapper.vm.percentages.height).toMatchObject({
       _base: null,
       sm: null,
       md: 80,
@@ -128,7 +128,7 @@ describe('ResponsiveImage.vue', () => {
 
     sizes = 'w-80 h-3/2 md:h-3/5 xl:h-2 w-10 md:w-50vw'
     wrapper.setProps({ src, sizes })
-    expect(wrapper.vm.heightPercentages).toMatchObject({
+    expect(wrapper.vm.percentages.height).toMatchObject({
       _base: 150,
       sm: 150,
       md: 60,
