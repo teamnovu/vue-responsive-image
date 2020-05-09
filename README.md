@@ -45,7 +45,7 @@ Just use the `<ResponsiveImage />` component where you would have a normal `<img
 
 ```html
 <ResponsiveImage
-  src="https://source.unsplash.com/random/{w}x1000"
+  src="https://source.unsplash.com/random/{w}x{h}"
   :screens="{
     xs: '360px',
     sm: '640px',
@@ -54,7 +54,7 @@ Just use the `<ResponsiveImage />` component where you would have a normal `<img
     xl: '1280px'
   }"
   :max-width="3000"
-  sizes="w-90vw md:w-60vw xl:w-50vw"
+  sizes="w-90vw md:w-60vw md:h-9/16 xl:w-50vw"
 />
 ```
 
@@ -65,7 +65,7 @@ Just use the `<ResponsiveImage />` component where you would have a normal `<img
 | `src`      	| `String` 	| none                                                       	| width: `{w}`                       	| The source to be used for the image with `{w}` where the width should go.      	|
 | `maxWidth` 	| `Number` 	| `2560`                                                     	| Any Number                         	| The maximum width used to calculate the image width on the biggest breakpoint. 	|
 | `screens`  	| `Object` 	| `{ sm: '640px', md: '768px', lg: '1024px', xl: '1280px' }` 	| An key pixel value pairs           	| The breakpoints to be used.                                                    	|
-| `sizes`    	| `String` 	| `100vw` for each breakpoint                                	| Any `vw` value for each breakpoint 	| Viewport-width to further shrink image on each breakpoint.                     	|
+| `sizes`    	| `String` 	| `w-Xvw`, `h-(full|x/y)` for each breakpoint                                	| Any `vw` value for width and any fraction for height for each breakpoint 	| Viewport-width / width/height-ratio to further shrink image on each breakpoint.                     	|
 
 ## Development
 
